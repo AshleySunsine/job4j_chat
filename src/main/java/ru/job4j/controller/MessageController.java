@@ -14,7 +14,7 @@ public class MessageController {
     MessageStore messages;
 
     @RequestMapping("/messages/{roomId}")
-    public List<Message> getAll(@PathVariable("roomId") int roomId ) {
+    public List<Message> getAll(@PathVariable("roomId") int roomId) {
         System.out.println("Messages!" + "id= " + roomId);
         return messages.findAllByRoomId(roomId);
     }

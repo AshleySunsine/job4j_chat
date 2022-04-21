@@ -11,4 +11,10 @@ public class IndexController {
         System.out.println("Index");
         return "index";
     }
+
+    @GetMapping({"/registry"})
+    public String registry(Model model) {
+        System.out.println("Index");
+        return "registry";
+    }
 }

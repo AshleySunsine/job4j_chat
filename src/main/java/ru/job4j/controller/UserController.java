@@ -21,7 +21,20 @@ public class UserController {
     @PostMapping("/sign-up")
     public void signUp(@RequestBody Person person) {
         person.setPassword(encoder.encode(person.getPassword()));
-        users.save(person);
+        System.out.println(users.save(person));
+        System.out.println("Registry!");
+
+    }
+
+    @GetMapping("/sign-in")
+    public Person signIn(@RequestBody Person person) {
+        Person personInBase = users.findByLogin(person.getLogin()).get();
+        if ((personInBase != null) && (personInBase.getPassword().equals(encoder.encode(person.getPassword())))) {
+            System.out.println(person.getLogin() + " AUTORIZED!");
+            return personInBase;
+        }
+        System.out.println("Don`t authorized!");
+        return null;
     }
 
     @GetMapping("/all")

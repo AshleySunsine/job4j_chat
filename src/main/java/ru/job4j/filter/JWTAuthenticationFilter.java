@@ -36,26 +36,32 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
-        throws AuthenticationException {
+            throws AuthenticationException {
         try {
-            Person creds = new ObjectMapper().readValue(req.getInputStream(), Person.class);
-            Authentication authentication = auth.authenticate(new UsernamePasswordAuthenticationToken(creds.getLogin(), creds.getPassword(), new ArrayList<>()));
-            return authentication;
+            Person creds = new ObjectMapper()
+                    .readValue(req.getInputStream(), Person.class);
+
+            return auth.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            creds.getLogin(),
+                            creds.getPassword(),
+                            new ArrayList<>())
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-                                            FilterChain chain, Authentication authResult)
-            throws IOException, ServletException {
-        System.out.println("SUCCESS");
+    protected void successfulAuthentication(HttpServletRequest req,
+                                            HttpServletResponse res,
+                                            FilterChain chain,
+                                            Authentication auth) throws IOException, ServletException {
+
         String token = JWT.create()
-                .withSubject(((User) authResult.getPrincipal()).getUsername())
+                .withSubject(((User) auth.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(SECRET.getBytes()));
-        System.out.println("TOKEN: " + token);
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+        res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
     }
 }

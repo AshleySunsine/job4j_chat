@@ -19,19 +19,17 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody Person person) {
+    public Person signUp(@RequestBody Person person) {
         System.out.println("HUI!");
         person.setPassword(encoder.encode(person.getPassword()));
-        System.out.println(users.save(person));
         System.out.println("Registry!");
+        return users.save(person);
 
     }
 
     @PostMapping("/sign-in")
     public Person signIn(@RequestBody Person person) {
         Person personInBase = users.findByLogin(person.getLogin()).get();
-        System.out.println(personInBase.getPassword() + " base");
-        System.out.println(encoder.encode(person.getPassword()) + " front");
         if ((personInBase != null) && (personInBase.getPassword().equals(encoder.encode(person.getPassword())))) {
             System.out.println(person.getLogin() + " AUTORIZED!");
             return personInBase;

@@ -45,7 +45,7 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({login: params.get("email"), password: params.get("password"), id: "0"})
             }).done(function(msg) {
-                alert( "Data Saved: ");
+                location.replace("/login.html");
             });
         }
     }

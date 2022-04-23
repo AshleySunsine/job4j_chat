@@ -37,12 +37,17 @@
         if (params != null) {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8082/users/sign-in",
-                dataType : "json",
+                url: "http://localhost:8082/login",
+                dataType : "text",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify({login: params.get("email"), password: params.get("password"), id: "0"})
-            }).done(function( msg ) {
-                alert( "Data Saved: " + msg );
+            }).done(function(data, textStatus, jqXHR) {
+                alert(data.toString());
+            })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert("Failed: " + errorThrown);
+                }).always(function (a, textStatus, b) {
+                //alert("Final status: " + textStatus);
             });
         }
     }

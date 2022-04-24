@@ -40,6 +40,7 @@ public class UserController {
 
     @GetMapping("/all")
     public List<Person> findAll() {
+        System.out.println("ALL USERS");
         return (List<Person>) users.findAll();
     }
 

@@ -27,7 +27,10 @@
           $.ajax({
               type: "GET",
               url: "http://localhost:8082/rooms/5",
-              dataType: "json"
+              dataType: "json",
+              beforeSend: function (xhr) {
+                  xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
+              }
           }).done(
               function (data) {
                   $('#nameOfRoom').text(data['themeOfRoom']);
@@ -51,11 +54,14 @@
           $.ajax({
               type: "GET",
               url: "http://localhost:8082/messages/5",
-              dataType: "json"
+              dataType: "json",
+              beforeSend: function (xhr) {
+                  xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
+              }
           }).done(function(data) {
-                alert(JSON.stringify(data));
               data.forEach(function(item, index, array){
-                  $('#messagesTable tr:last').after('<tr><th scope="row">' + 'Отправил: ' + 'Логин-> ' + item['senderId']['login']
+                  $('#messagesTable tr:last')
+                      .after('<tr><th scope="row">' + 'Отправил: ' + 'Логин-> ' + item['senderId']['login']
                       + ' Пароль-> ' + item['senderId']['password'] + '</th><td>'
                       + item['content'] + '</th><td>'
                       + item['timestamp'] + '</th><td>'
@@ -67,17 +73,16 @@
   </script>
 
     <form class="container">
-        
             <div class="user__info">
                 <img class = "avatar" src="./img/user__photo.png" alt="user" id="user__photo">
-                <h3 class="profile__name" name="creatorName" id="creator__name">Имя участника</h3>
+                <h3 class="profile__name" name="creatorName" id="creator__name"></h3>
             </div>
         
         <hr class="hr__line">
 
         <div class="header__table">
           <h4 class="title__table" id="nameOfRoom">Таблица диалога</h4>
-          <input type="button" value="Обновить таблицу" name="refresh" id="refresh__table" onclick='fillRoom()'></input>
+          <input type="button" value="Обновить таблицу" name="refresh" id="refresh__table" onclick='fillTable()'></input>
         </div>
 
         <table class="table table-striped" id="messagesTable" name="messagesTable">

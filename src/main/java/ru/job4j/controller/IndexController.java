@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
     @GetMapping({"/index"})
     public String index(Model model) {
+
         System.out.println("Index");
-        return "index";
+        return "index.html";
     }
 
     @GetMapping({"/registry"})

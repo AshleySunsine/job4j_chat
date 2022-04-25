@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype "text/html;charset=UTF-8">
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -38,13 +38,13 @@
             $.ajax({
                 type: "post",
                 url: "http://localhost:8082/login",
-                dataType : "text",
-                contentType: "application/json; charset=utf-8",
+                dataType : "html",
+                contentType: "text/css",
                 data: JSON.stringify({login: params.get("email"), password: params.get("password"), id: "0"})
             }).done(function(data, textStatus, jqXHR) {
                 var tokenBearer = jqXHR.getResponseHeader("authorization").split(" ");
                 var token = tokenBearer[1];
-                redirectToUrl(window.location.host + "/index", token);
+                redirectToUrl(params.get("email"), window.location.host + "/index", token);
             })
                 .fail(function (jqXHR, textStatus, errorThrown) {
                     alert("Failed: " + errorThrown);
@@ -52,14 +52,16 @@
         }
     }
 
-    function redirectToUrl(urlTo, token) {
+    function redirectToUrl(userLogin, urlTo, token) {
         $.ajax({
             type: 'get',
             url: "http://" + urlTo,
-            contentType: 'application/json',
+            contentType: "text/css",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Authorization", "Bearer " + token);
                sessionStorage.setItem("Auth", token);
+               sessionStorage.setItem("userLogin", userLogin);
+
             }
         }).done(function (a) {
             $('body').html( a );

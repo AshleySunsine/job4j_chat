@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype "text/html;charset=UTF-8">
 <html lang="en">
   <head>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -23,28 +23,34 @@
   <body>
 
   <script>
+      var creatorName;
+      var roomName;
+      var roomParticipants;
+      var idOfRoom = 5;
+
+      $(document).ready(function () {
+          fillRoom();
+          fillTable();
+      })
       function fillRoom() {
           $.ajax({
               type: "GET",
-              url: "http://localhost:8082/rooms/5",
+              url: "http://localhost:8082/rooms/" + idOfRoom,
               dataType: "json",
               beforeSend: function (xhr) {
                   xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
               }
           }).done(
               function (data) {
-                  $('#nameOfRoom').text(data['themeOfRoom']);
-                  var creatorName;
-                  data['participants'].forEach(function(o, i, a) {
+                  roomName = data['themeOfRoom'];
+                  roomParticipants = data['participants'];
+                  $('#nameOfRoom').text(roomName);
+                  roomParticipants.forEach(function(o, i, a) {
                       if(o['id'] == data['creatorId']) {
-                          creatorName = o['password'];
+                          creatorName = o['name'];
                       }
                   });
                   $('#creator__name').text(creatorName);
-
-
-
-
               }
           );
       }
@@ -53,16 +59,17 @@
       function fillTable() {
           $.ajax({
               type: "GET",
-              url: "http://localhost:8082/messages/5",
+              url: "http://localhost:8082/messages/" + idOfRoom,
               dataType: "json",
+
               beforeSend: function (xhr) {
                   xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
               }
           }).done(function(data) {
               data.forEach(function(item, index, array){
                   $('#messagesTable tr:last')
-                      .after('<tr><th scope="row">' + 'Отправил: ' + 'Логин-> ' + item['senderId']['login']
-                      + ' Пароль-> ' + item['senderId']['password'] + '</th><td>'
+                      .after('<tr><th scope="row">' + 'Отправил: ' + 'Имя-> ' + item['sender']['name']
+                      + ' Логин-> ' + item['sender']['login'] + '</th><td>'
                       + item['content'] + '</th><td>'
                       + item['timestamp'] + '</th><td>'
                       + '</td></tr>');
@@ -70,12 +77,30 @@
               );
           });
       }
+
+      function sendMessage() {
+            var message = document.getElementById("message-field").value;
+            if (message === '') {
+                alert('Заполните поля');
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost:8082/messages/" + idOfRoom,
+                    dataType : "json",
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
+                    },
+                    data: JSON.stringify({roomId:idOfRoom, sender: {login:sessionStorage.getItem("userLogin")}, content: message})
+                })
+            }
+      }
   </script>
 
     <form class="container">
             <div class="user__info">
                 <img class = "avatar" src="./img/user__photo.png" alt="user" id="user__photo">
-                <h3 class="profile__name" name="creatorName" id="creator__name"></h3>
+                <h3 class="profile__name" name="creator__name" id="creator__name"></h3>
             </div>
         
         <hr class="hr__line">
@@ -99,9 +124,6 @@
               <td id="message__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae cumque hic omnis incidunt suscipit voluptatum perferendis nostrum animi deleniti praesentium, explicabo illo quidem pariatur in tenetur debitis ex placeat nisi.</td>
               <td id="message__date">date</td>
             </tr>
-
-
-
           </tbody>
         </table>
 
@@ -109,9 +131,9 @@
 
         <span class="message__from">Сообщение:</span>
         <div class="message">
-          <textarea class="text" name="message-field" id="text__area" placeholder="Написать сообщение..."></textarea>
+          <textarea class="text" name="message-field" id="message-field" placeholder="Написать сообщение..."></textarea>
         </div>
-        <input type="submit" name="submit" value="Отправить" id="send__message">
+        <input type="button" name="button" value="Отправить" id="send__message" onclick="sendMessage()">
 
     </form>
   </body>

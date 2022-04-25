@@ -32,12 +32,24 @@ public class Message {
         this.roomId = chatId;
     }
 
-    public Person getSenderId() {
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public Person getSender() {
         return sender;
     }
 
-    public void setSenderId(String senderId) {
+    public void setSender(Person sender) {
         this.sender = sender;
+    }
+
+    public int getSenderId() {
+        return sender.getId();
     }
 
     public String getContent() {
@@ -71,5 +83,16 @@ public class Message {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Message{"
+              + "id=" + id
+              + ", roomId=" + roomId
+              + ", sender=" + sender
+              + ", content='" + content + '\''
+              + ", timestamp=" + timestamp
+              + '}';
     }
 }

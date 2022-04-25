@@ -11,9 +11,7 @@ img {
 body {
     margin: 0;
     color: black;
-    /* font-family: Arial, Helvetica, serif;*/
     font-style: normal;
-    /*font-size: 11px;*/
     font-weight: 400; 
 }
 
@@ -23,7 +21,7 @@ body {
     padding-right: 20px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: auto;
+    margin-top: 30px;
     margin-bottom: 30px;
 }
 
@@ -31,7 +29,6 @@ body {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
-    padding-top: 50px;
     column-gap: 30px;
 }
 
@@ -44,6 +41,7 @@ body {
     padding: 5px 10px 5px;
     margin: 0;
     border: 1px solid;
+    border-radius: .5em;
     vertical-align: center;
 }
 
@@ -72,6 +70,7 @@ body {
 
 .message__from {
     border: 1px solid;
+    border-radius: .5em;
     padding: 5px 5px;
 }
 
@@ -84,5 +83,15 @@ body {
     resize: vertical;
     padding:15px;
     border:1px solid;
+    border-radius: 1em;
     height:150px;
+}
+
+.send_btn {
+    border-radius: .5em;
+    width: 100px;
+}
+
+.refresh-table_btn {
+    border-radius: .5em;
 }

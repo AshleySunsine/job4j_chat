@@ -13,6 +13,7 @@ public class Person {
     private int id;
     private String login;
     private String password;
+    private String name;
 
     public int getId() {
         return id;
@@ -38,6 +39,14 @@ public class Person {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -58,9 +67,10 @@ public class Person {
     @Override
     public String toString() {
         return "Person{"
-                + "id=" + id
-                + ", login='" + login + '\''
-                + ", password='" + password + '\''
-                + '}';
+             + "id=" + id
+             + ", login='" + login + '\''
+             + ", password='" + password + '\''
+             + ", name='" + name + '\''
+             + '}';
     }
 }

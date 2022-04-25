@@ -43,7 +43,7 @@
                 url: "http://localhost:8082/users/sign-up",
                 dataType : "json",
                 contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({login: params.get("email"), password: params.get("password"), id: "0"})
+                data: JSON.stringify({login: params.get("email"), password: params.get("password"), name: params.get("name"), id: "0"})
             }).done(function(msg) {
                 location.replace("/login.html");
             });

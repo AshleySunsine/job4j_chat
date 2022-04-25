@@ -1,140 +1,87 @@
 <!doctype "text/html;charset=UTF-8">
 <html lang="en">
   <head>
-      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-              integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-              integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-              integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-      <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
 
-      <!-- Required meta tags -->
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Профиль учакстника</title>
+    <link rel="stylesheet" href="./css/main2.css">
+    <title>Список комнат</title>
   </head>
   <body>
-
   <script>
-      var creatorName;
-      var roomName;
-      var roomParticipants;
-      var idOfRoom = 5;
-
-      $(document).ready(function () {
-          fillRoom();
-          fillTable();
-      })
-      function fillRoom() {
-          $.ajax({
-              type: "GET",
-              url: "http://localhost:8082/rooms/" + idOfRoom,
-              dataType: "json",
-              beforeSend: function (xhr) {
-                  xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
-              }
-          }).done(
-              function (data) {
-                  roomName = data['themeOfRoom'];
-                  roomParticipants = data['participants'];
-                  $('#nameOfRoom').text(roomName);
-                  roomParticipants.forEach(function(o, i, a) {
-                      if(o['id'] == data['creatorId']) {
-                          creatorName = o['name'];
-                      }
-                  });
-                  $('#creator__name').text(creatorName);
-              }
-          );
-      }
-
-      var messages;
-      function fillTable() {
-          $.ajax({
-              type: "GET",
-              url: "http://localhost:8082/messages/" + idOfRoom,
-              dataType: "json",
-
-              beforeSend: function (xhr) {
-                  xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
-              }
-          }).done(function(data) {
-              data.forEach(function(item, index, array){
-                  $('#messagesTable tr:last')
-                      .after('<tr><th scope="row">' + 'Отправил: ' + 'Имя-> ' + item['sender']['name']
-                      + ' Логин-> ' + item['sender']['login'] + '</th><td>'
-                      + item['content'] + '</th><td>'
-                      + item['timestamp'] + '</th><td>'
-                      + '</td></tr>');
-              }
-              );
-          });
-      }
-
-      function sendMessage() {
-            var message = document.getElementById("message-field").value;
-            if (message === '') {
-                alert('Заполните поля');
-            } else {
-                $.ajax({
-                    type: "post",
-                    url: "http://localhost:8082/messages/" + idOfRoom,
-                    dataType : "json",
-                    contentType: "application/json; charset=utf-8",
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
-                    },
-                    data: JSON.stringify({roomId:idOfRoom, sender: {login:sessionStorage.getItem("userLogin")}, content: message})
-                })
-            }
-      }
+    function fillIndex() {
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8082/rooms/all",
+        dataType: "json",
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
+        }
+      }).done(function (data) {
+         /* data.forEach(function(o, i, a) {
+          var roomName = o['themeOfRoom'];
+          alert(o);
+        });*/
+          alert(data);
+      });
+    }
   </script>
 
     <form class="container">
-            <div class="user__info">
-                <img class = "avatar" src="./img/user__photo.png" alt="user" id="user__photo">
-                <h3 class="profile__name" name="creator__name" id="creator__name"></h3>
-            </div>
+
+        <div class="user__info">
+            <img class = "avatar" src="./img/user__photo.png" alt="user" id="user__photo">
+            <h3 class="profile__name" name="userName" id="user__name">Григорий Григорьев</h3>
+        </div>
         
         <hr class="hr__line">
 
         <div class="header__table">
-          <h4 class="title__table" id="nameOfRoom">Таблица диалога</h4>
-          <input type="button" value="Обновить таблицу" name="refresh" id="refresh__table" onclick='fillTable()'></input>
-        </div>
+            <h4 class="title__table">Доступные комнаты:</h4>
+          </div>
+          
+          <table class="table table-striped ">
+            <thead>
+              <tr>
+                <th scope="col">Имя комнаты</th>
+                <th scope="col">Имя создателя</th>
+                <th scope="col">Войти в комнату</th>
+              </tr>
+            </thead>
+            <tbody>
 
-        <table class="table table-striped" id="messagesTable" name="messagesTable">
-          <thead>
-            <tr>
-              <th scope="col">Имя участника</th>
-              <th scope="col">Сообщение участника</th>
-              <th scope="col">Дата сообщения</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row" id="message__sender">name</th>
-              <td id="message__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae cumque hic omnis incidunt suscipit voluptatum perferendis nostrum animi deleniti praesentium, explicabo illo quidem pariatur in tenetur debitis ex placeat nisi.</td>
-              <td id="message__date">date</td>
-            </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
 
         <hr class="hr__line">
 
-        <span class="message__from">Сообщение:</span>
-        <div class="message">
-          <textarea class="text" name="message-field" id="message-field" placeholder="Написать сообщение..."></textarea>
-        </div>
-        <input type="button" name="button" value="Отправить" id="send__message" onclick="sendMessage()">
+        <input type="button" onclick="fillIndex()" class="refresh__accessible__rooms" value="Обновить" name="refresh__rooms" id="refresh__rooms__btn">
 
     </form>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    -->
   </body>
 </html>

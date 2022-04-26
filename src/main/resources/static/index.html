@@ -21,6 +21,9 @@
   </head>
   <body>
   <script>
+      $(document).ready(function () {
+          fillIndex();
+      })
     function fillIndex() {
       $.ajax({
         type: "GET",
@@ -30,13 +33,45 @@
           xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
         }
       }).done(function (data) {
-         /* data.forEach(function(o, i, a) {
-          var roomName = o['themeOfRoom'];
-          alert(o);
-        });*/
-          alert(data);
+          data.forEach(function(o, i, a) {
+              var roomName = o['themeOfRoom'];
+              var roomParticipants = o['participants'];
+              var roomNumber = o['id'];
+              var creatorId = o['creatorId'];
+              var creatorName;
+              roomParticipants.forEach(function(o, i, a) {
+                  if(o['id'] === creatorId) {
+                      creatorName = o['name'];
+                  }
+              });
+              $('#roomsTable tr:last')
+                  .after('<tr><th scope="row">' + roomName + '</th><td>'
+                  + creatorName + '</th>'
+                  + '<td id="message__date">'
+                         + '<button className="button" name="enter_in_room" id="enter_in_room" onclick="redirectToRoom(' + roomNumber
+                      + ')">Войти</button>'
+                  + '</td></tr>');
+          });
+
       });
     }
+
+      function redirectToRoom(userLogin, urlTo, token) {
+          $.ajax({
+              type: 'get',
+              url: "http://" + urlTo,
+              contentType: "text/css",
+              beforeSend: function (xhr) {
+                  xhr.setRequestHeader("Authorization", "Bearer " + token);
+                  sessionStorage.setItem("Auth", token);
+                  sessionStorage.setItem("userLogin", userLogin);
+
+              }
+          }).done(function (a) {
+              $('body').html( a );
+          });
+
+      }
   </script>
 
     <form class="container">
@@ -52,7 +87,7 @@
             <h4 class="title__table">Доступные комнаты:</h4>
           </div>
           
-          <table class="table table-striped ">
+          <table class="table table-striped" id="roomsTable" name="roomsTable">
             <thead>
               <tr>
                 <th scope="col">Имя комнаты</th>

@@ -1,0 +1,10 @@
+insert into public.message (id, content, room_id, timestamp, sender_id) values (3, 'Message 1', 5, '2022-04-25 20:03:02.262000', 29);
+insert into public.message (id, content, room_id, timestamp, sender_id) values (4, 'Message 2', 5, '2022-04-25 20:03:09.699000', 29);
+insert into public.message (id, content, room_id, timestamp, sender_id) values (5, 'Message 3', 5, '2022-04-25 20:03:36.678000', 30);
+insert into public.message (id, content, room_id, timestamp, sender_id) values (6, 'Message 3', 5, '2022-04-25 20:03:37.920000', 30);
+insert into public.message (id, content, room_id, timestamp, sender_id) values (7, 'Message 4', 5, '2022-04-25 20:03:58.095000', 31);
+insert into public.message (id, content, room_id, timestamp, sender_id) values (8, 'Message 5', 5, '2022-04-25 20:04:06.350000', 31);
+insert into public.message (id, content, room_id, timestamp, sender_id) values (9, 'Message 6', 5, '2022-04-25 20:04:16.460000', 32);
+insert into public.message (id, content, room_id, timestamp, sender_id) values (10, 'Message 7', 5, '2022-04-25 20:04:19.184000', 32);
+insert into public.message (id, content, room_id, timestamp, sender_id) values (11, 'Message 8', 5, '2022-04-25 20:04:33.444000', 28);
+insert into public.message (id, content, room_id, timestamp, sender_id) values (12, 'Message 9', 5, '2022-04-25 20:04:36.854000', 28);

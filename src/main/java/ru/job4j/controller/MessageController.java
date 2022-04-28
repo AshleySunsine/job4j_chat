@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 public class MessageController {
     @Autowired
-    MessageStore messages;
+    private MessageStore messages;
     @Autowired
     private UserStore users;
 

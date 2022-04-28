@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/rooms")
 public class RoomController {
     @Autowired
-    RoomStore rooms;
+    private RoomStore rooms;
 
     @GetMapping("/all")
     public List<Room> getAll() {

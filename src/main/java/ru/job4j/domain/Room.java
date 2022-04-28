@@ -1,8 +1,9 @@
 package ru.job4j.domain;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Room")
@@ -13,7 +14,7 @@ public class Room {
     private int creatorId;
     private String themeOfRoom;
     @ManyToMany
-    private List<Person> participants;
+    private Set<Person> participants = new HashSet<>();
 
     public int getId() {
         return id;
@@ -39,11 +40,11 @@ public class Room {
         this.themeOfRoom = themeOfRoom;
     }
 
-    public List<Person> getParticipants() {
+    public Set<Person> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<Person> participants) {
+    public void setParticipants(Set<Person> participants) {
         this.participants = participants;
     }
 

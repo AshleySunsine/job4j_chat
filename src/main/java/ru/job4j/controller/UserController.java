@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.domain.Person;
 import ru.job4j.repository.UserStore;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users")
@@ -39,9 +39,9 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public List<Person> findAll() {
+    public Set<Person> findAll() {
         System.out.println("ALL USERS");
-        return (List<Person>) users.findAll();
+        return (Set<Person>) users.findAll();
     }
 
     @GetMapping("/{id}")

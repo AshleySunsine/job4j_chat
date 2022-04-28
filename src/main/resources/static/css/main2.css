@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+body {
+    margin: 0;
+    color: black;
+    font-style: normal;
+    font-weight: 400; 
+}
+
+.container {
+    max-width: 1140px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.user__info {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    column-gap: 30px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.profile__name {
+    padding: 5px 10px 5px;
+    margin: 0;
+    border: 1px solid;
+    border-radius: .5em;
+    vertical-align: center;
+}
+
+.hr__line {
+    margin: 20px 0;
+	padding: 0;
+	height: 0;
+	border: none;
+	border-top: 1px solid #333;
+}
+
+.title__table {
+    padding-left: 30px;
+    font-weight: 400;
+}
+
+.header__table {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 20px 20px;
+}
+
+.table-striped {
+    text-align: center
+}
+
+.enter__room {
+    border-radius: .5em;
+    width: 100px;
+}
+
+.refresh__accessible__rooms {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: .5em;
+    width: 100px;
+}

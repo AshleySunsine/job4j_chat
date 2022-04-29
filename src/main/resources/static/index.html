@@ -27,7 +27,7 @@
     function fillIndex() {
       $.ajax({
         type: "get",
-        url: "http://localhost:8082/rooms/all",
+        url: "http://" + window.location.host + "/rooms/all",
         dataType: "json",
         beforeSend: function (xhr) {
           xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
@@ -44,8 +44,10 @@
                       creatorName = o['name'];
                   }
               });
+
+              $('#user__name').text(creatorName);
               $('#roomsTable tr:last')
-                  .after('<tr><th scope="row">' + roomName + '</th><td>'
+                  .after('<tr><td>' + roomName + '</td><td>'
                   + creatorName + '</th>'
                   + '<td id="message__date">'
                          + '<button type="button" class="btn btn-primary" onclick="redirectToRoom('
@@ -74,7 +76,7 @@
       function addRoom() {
           $.ajax({
               type: "get",
-              url: "http://localhost:8082/addRoom",
+              url: "http://" + window.location.host + "/addRoom",
               ContentType: "text/css",
               beforeSend: function (xhr) {
                   xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
@@ -89,7 +91,7 @@
 
         <div class="user__info">
             <img class = "avatar" src="./img/user__photo.png" alt="user" id="user__photo">
-            <h3 class="profile__name" name="userName" id="user__name">Григорий Григорьев</h3>
+            <h3 class="profile__name" name="userName" id="user__name"></h3>
         </div>
         
         <hr class="hr__line">

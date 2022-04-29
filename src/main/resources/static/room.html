@@ -26,7 +26,7 @@
       var creatorName;
       var roomName;
       var roomParticipants;
-      var idOfRoom = 5;
+      var idOfRoom = sessionStorage.getItem("toRoomId");
 
       $(document).ready(function () {
           fillRoom();
@@ -35,7 +35,7 @@
       function fillRoom() {
           $.ajax({
               type: "GET",
-              url: "http://localhost:8082/rooms/" + idOfRoom,
+              url: "http://" + window.location.host + "/rooms/" + idOfRoom,
               dataType: "json",
               beforeSend: function (xhr) {
                   xhr.setRequestHeader("Authorization", 'Bearer '+ sessionStorage.getItem("Auth"));
@@ -46,7 +46,7 @@
                   roomParticipants = data['participants'];
                   $('#nameOfRoom').text(roomName);
                   roomParticipants.forEach(function(o, i, a) {
-                      if(o['id'] == data['creatorId']) {
+                      if(o['id'] === data['creatorId']) {
                           creatorName = o['name'];
                       }
                   });
@@ -59,7 +59,7 @@
       function fillTable() {
           $.ajax({
               type: "GET",
-              url: "http://localhost:8082/messages/" + idOfRoom,
+              url: "http://" + window.location.host + "/messages/" + idOfRoom,
               dataType: "json",
 
               beforeSend: function (xhr) {
@@ -68,8 +68,8 @@
           }).done(function(data) {
               data.forEach(function(item, index, array){
                   $('#messagesTable tr:last')
-                      .after('<tr><th scope="row">' + 'Отправил: ' + 'Имя-> ' + item['sender']['name']
-                      + ' Логин-> ' + item['sender']['login'] + '</th><td>'
+                      .after('<tr><td>' + 'Отправил: ' + 'Имя-> ' + item['sender']['name']
+                      + ' Логин-> ' + item['sender']['login'] + '</td><td>'
                       + item['content'] + '</th><td>'
                       + item['timestamp'] + '</th><td>'
                       + '</td></tr>');
@@ -85,7 +85,7 @@
             } else {
                 $.ajax({
                     type: "post",
-                    url: "http://localhost:8082/messages/" + idOfRoom,
+                    url: "http://" + window.location.host + "/messages/" + idOfRoom,
                     dataType : "json",
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function (xhr) {
@@ -120,9 +120,9 @@
           </thead>
           <tbody>
             <tr>
-              <th scope="row" id="message__sender">name</th>
+              <th scope="row" id="message__sender"></th>
               <td id="message__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae cumque hic omnis incidunt suscipit voluptatum perferendis nostrum animi deleniti praesentium, explicabo illo quidem pariatur in tenetur debitis ex placeat nisi.</td>
-              <td id="message__date">date</td>
+              <td id="message__date"></td>
             </tr>
           </tbody>
         </table>

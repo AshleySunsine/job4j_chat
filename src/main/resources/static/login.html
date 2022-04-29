@@ -37,7 +37,7 @@
         if (params != null) {
             $.ajax({
                 type: "post",
-                url: "http://localhost:8082/login",
+                url: "http://" + window.location.host + "/login",
                 dataType : "html",
                 contentType: "text/css",
                 data: JSON.stringify({login: params.get("email"), password: params.get("password"), id: "0"})

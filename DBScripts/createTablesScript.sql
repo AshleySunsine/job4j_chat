@@ -51,23 +51,23 @@ CREATE TABLE IF NOT EXISTS public.room_participants
     participants_id integer NOT NULL
 );
 
-ALTER TABLE IF EXISTS public.message
+ALTER TABLE IF EXISTS message
     ADD CONSTRAINT fk6p9dy39ram5rqdl84nciff92j FOREIGN KEY (sender_id)
-        REFERENCES public.person (id) MATCH SIMPLE
+        REFERENCES person (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION;
 
 
 ALTER TABLE IF EXISTS public.room_participants
     ADD CONSTRAINT fk440oswk1emp4o62bwynomg4r8 FOREIGN KEY (participants_id)
-        REFERENCES public.person (id) MATCH SIMPLE
+        REFERENCES person (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION;
 
 
 ALTER TABLE IF EXISTS public.room_participants
     ADD CONSTRAINT fkd93x26glimf3l3f05ukaoi6ry FOREIGN KEY (room_id)
-        REFERENCES public.room (id) MATCH SIMPLE
+        REFERENCES room (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION;
 
